@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,8 @@ import br.com.zup.digitalbank.repository.CustomerRepository;
 @Service
 public class CustomerService {
 
-	private final CustomerRepository repository;
-
-	CustomerService(final CustomerRepository customerRepository) {
-		this.repository = customerRepository;
-	}
+	@Autowired
+	private CustomerRepository repository;
 
 	public List<Customer> findAll() {
 		return repository.findAll();

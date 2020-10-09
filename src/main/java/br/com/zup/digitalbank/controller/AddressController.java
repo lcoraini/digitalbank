@@ -2,6 +2,7 @@ package br.com.zup.digitalbank.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,11 +19,8 @@ import br.com.zup.digitalbank.service.AddressService;
 @RequestMapping(path = "/address")
 public class AddressController {
 
-	private final AddressService service;
-
-	AddressController(final AddressService addressService) {
-		this.service = addressService;
-	}
+	@Autowired
+	private AddressService service;
 
 	@GetMapping
 	public ResponseEntity<List<Address>> findAll() {

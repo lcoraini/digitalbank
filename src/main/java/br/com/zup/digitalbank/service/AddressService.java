@@ -1,11 +1,12 @@
 package br.com.zup.digitalbank.service;
 
-import static br.com.zup.digitalbank.utils.Utils.getCustomerExample;
+import static br.com.zup.digitalbank.utils.Utils.getCustomerByIdExample;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,10 @@ import br.com.zup.digitalbank.repository.CustomerRepository;
 @Service
 public class AddressService {
 
-	private final AddressRepository repository;
-	private final CustomerRepository customerRepository;
-
-	AddressService(final AddressRepository addressRepository, final CustomerRepository customerRepository) {
-		this.repository = addressRepository;
-		this.customerRepository = customerRepository;
-	}
+	@Autowired
+	private AddressRepository repository;
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	public List<Address> findAll() {
 		return repository.findAll();
@@ -38,7 +36,7 @@ public class AddressService {
 
 	public ResponseEntity<ResponseMessage> create(final Address address) {
 		final List<String> errors = new ArrayList<>();
-		if (!customerRepository.exists(getCustomerExample(address.getCustomerId()))) {
+		if (!customerRepository.exists(getCustomerByIdExample(address.getCustomerId()))) {
 			errors.add("address.validator.customerNotFoundById: " + address.getCustomerId());
 		}
 		errors.addAll(validateAddress(address));

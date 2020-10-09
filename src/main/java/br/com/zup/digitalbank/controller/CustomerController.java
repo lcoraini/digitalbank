@@ -2,6 +2,7 @@ package br.com.zup.digitalbank.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,11 +19,8 @@ import br.com.zup.digitalbank.service.CustomerService;
 @RequestMapping(path = "/customers")
 public class CustomerController {
 
-	private final CustomerService service;
-
-	CustomerController(final CustomerService customerService) {
-		this.service = customerService;
-	}
+	@Autowired
+	private CustomerService service;
 
 	@GetMapping
 	public ResponseEntity<List<Customer>> findAll() {
