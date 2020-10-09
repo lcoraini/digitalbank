@@ -41,12 +41,12 @@ public class CustomerController {
 	}
 
 	@GetMapping(path = "/email")
-	public ResponseEntity<List<Customer>> findByEmail(@RequestBody final String email) {
+	public ResponseEntity<Customer> findByEmail(@RequestBody final String email) {
 		return ResponseEntity.ok().body(service.findByEmail(email));
 	}
 
 	@GetMapping(path = "/cpf")
-	public ResponseEntity<List<Customer>> findByCpf(@RequestBody final String cpf) {
+	public ResponseEntity<Customer> findByCpf(@RequestBody final String cpf) {
 		return ResponseEntity.ok().body(service.findByCpf(cpf));
 	}
 }

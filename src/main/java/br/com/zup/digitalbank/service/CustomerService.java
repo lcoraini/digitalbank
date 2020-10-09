@@ -37,10 +37,10 @@ public class CustomerService {
 	public ResponseEntity<ResponseMessage> create(final Customer customer) {
 		final List<String> errors = new ArrayList<>();
 		final String cpfPattern = "\\d{9}-\\d{2}";
-		if (!findByEmail(customer.getEmail()).isEmpty()) {
+		if (!(findByEmail(customer.getEmail()) == null)) {
 			errors.add("customer.validator.emailAlreadyExists: " + customer.getEmail());
 		}
-		if (!findByCpf(customer.getCpf()).isEmpty()) {
+		if (!(findByCpf(customer.getCpf()) == null)) {
 			errors.add("customer.validator.cpfAlreadyExists: " + customer.getCpf());
 		}
 		if (customer.getCpf() != null && !customer.getCpf().matches(cpfPattern)) {
@@ -56,11 +56,11 @@ public class CustomerService {
 		return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, location.getPath()).build();
 	}
 
-	public List<Customer> findByEmail(final String email) {
+	public Customer findByEmail(final String email) {
 		return repository.findByEmail(email);
 	}
 
-	public List<Customer> findByCpf(final String cpf) {
+	public Customer findByCpf(final String cpf) {
 		return repository.findByCpf(cpf);
 	}
 
