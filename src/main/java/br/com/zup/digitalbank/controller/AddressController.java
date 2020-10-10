@@ -28,12 +28,13 @@ public class AddressController {
 	}
 
 	@GetMapping(path = "/customer/{customerId}")
-	public ResponseEntity<List<Address>> findByCustomer(@PathVariable final Integer customerId) {
+	public ResponseEntity<List<Address>> findByCustomer(@PathVariable("customerId") final Integer customerId) {
 		return ResponseEntity.ok().body(service.findByCustomerId(customerId));
 	}
 
-	@PostMapping
-	public ResponseEntity<ResponseMessage> create(@RequestBody final Address address) {
-		return service.create(address);
+	@PostMapping(path = "/{customerId}")
+	public ResponseEntity<ResponseMessage> create(@PathVariable("customerId") final Integer customerId,
+			@RequestBody final Address address) {
+		return service.create(customerId, address);
 	}
 }

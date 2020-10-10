@@ -1,6 +1,5 @@
 package br.com.zup.digitalbank.service;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.zup.digitalbank.message.ResponseMessage;
 import br.com.zup.digitalbank.model.Customer;
@@ -49,9 +47,8 @@ public class CustomerService {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Validation error", errors));
 		}
 		final Customer newCustomer = repository.save(customer);
-		final URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(newCustomer.getId()).toUri();
-		return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, location.getPath()).build();
+		return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, "/address/" + newCustomer.getId())
+				.build();
 	}
 
 	public Customer findByEmail(final String email) {

@@ -2,7 +2,6 @@ package br.com.zup.digitalbank.service;
 
 import static br.com.zup.digitalbank.utils.Utils.getCustomerByIdExample;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.zup.digitalbank.message.ResponseMessage;
 import br.com.zup.digitalbank.model.Address;
@@ -34,19 +32,18 @@ public class AddressService {
 		return repository.findByCustomerId(customerId);
 	}
 
-	public ResponseEntity<ResponseMessage> create(final Address address) {
+	public ResponseEntity<ResponseMessage> create(final Integer customerId, final Address address) {
 		final List<String> errors = new ArrayList<>();
-		if (!customerRepository.exists(getCustomerByIdExample(address.getCustomerId()))) {
+		if (!customerRepository.exists(getCustomerByIdExample(customerId))) {
 			errors.add("address.validator.customerNotFoundById: " + address.getCustomerId());
 		}
 		errors.addAll(validateAddress(address));
 		if (!errors.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Validation error", errors));
 		}
-		final Address newAddress = repository.save(address);
-		final URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(newAddress.getCustomerId()).toUri();
-		return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, location.getPath()).build();
+		repository.save(address);
+		return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, "/files/upload/" + customerId)
+				.build();
 	}
 
 	private static List<String> validateAddress(final Address address) {

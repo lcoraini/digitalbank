@@ -40,7 +40,7 @@ public class CustomerTest extends AbstractTest {
 		final int status = mvcResult.getResponse().getStatus();
 		assertEquals(201, status);
 		final String content = mvcResult.getResponse().getHeader("Location");
-		assertEquals(content, "/customers/1");
+		assertEquals(content, "/address/1");
 	}
 
 	@Test

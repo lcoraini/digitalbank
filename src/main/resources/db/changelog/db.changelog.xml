@@ -70,4 +70,26 @@
 		<addUniqueConstraint columnNames="cpf" tableName="customer"/>
 		<addUniqueConstraint columnNames="email" tableName="customer"/>
 	</changeSet>
+	
+	<changeSet id="4" author="lcoraini">
+		<comment>Cria tabela para entidade FileDB</comment>
+		<createSequence sequenceName="files_id_seq" minValue="0" startValue="1" incrementBy="1"/>
+		<createTable tableName="files">
+			<column name="id" type="INT" autoIncrement="true">
+				<constraints primaryKey="true" primaryKeyName="pk_files" />
+			</column>
+			<column name="name" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="type" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="data" type="LONGBLOB">
+				<constraints nullable="false" />
+			</column>
+			<column name="customer_id" type="INT">
+				<constraints foreignKeyName="fk_files_customer_id" referencedTableName="customer" referencedColumnNames="id"/>
+			</column>
+		</createTable>
+	</changeSet>
 </databaseChangeLog>

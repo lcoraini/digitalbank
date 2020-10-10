@@ -51,7 +51,7 @@ public class AddressTest extends AbstractTest {
 		customer.setBirthDate(new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime());
 		final Integer customerId = customerRepository.save(customer).getId();
 
-		final String uri = "/address";
+		final String uri = "/address/" + customer.getId();
 		final Address address = new Address();
 		address.setZipCode("12345-000");
 		address.setStreet("Rua");
@@ -69,12 +69,12 @@ public class AddressTest extends AbstractTest {
 		final int status = mvcResult.getResponse().getStatus();
 		assertEquals(201, status);
 		final String content = mvcResult.getResponse().getHeader("Location");
-		assertEquals(content, "/address/" + customerId);
+		assertEquals(content, "/files/upload/" + customerId);
 	}
 
 	@Test
 	public void givenNonExistentCustomer_whenSave_thenBadRequest() throws Exception {
-		final String uri = "/address";
+		final String uri = "/address/99";
 		final Address address = new Address();
 		address.setZipCode("12345-000");
 		address.setStreet("Rua");
@@ -98,8 +98,8 @@ public class AddressTest extends AbstractTest {
 
 	@Test
 	public void givenInvalidPatternZipCode_whenSave_thenBadRequest() throws Exception {
-		final String uri = "/address";
 		final Customer customer = customerRepository.findByEmail("address@address.com");
+		final String uri = "/address/" + customer.getId();
 		final Address address = new Address();
 		address.setZipCode("123456-00");
 		address.setStreet("Rua");
@@ -123,8 +123,8 @@ public class AddressTest extends AbstractTest {
 
 	@Test
 	public void givenNullZipCode_whenSave_thenBadRequest() throws Exception {
-		final String uri = "/address";
 		final Customer customer = customerRepository.findByEmail("address@address.com");
+		final String uri = "/address/" + customer.getId();
 		final Address address = new Address();
 		address.setZipCode(null);
 		address.setStreet("Rua");
@@ -148,8 +148,8 @@ public class AddressTest extends AbstractTest {
 
 	@Test
 	public void givenNullStreet_whenSave_thenBadRequest() throws Exception {
-		final String uri = "/address";
 		final Customer customer = customerRepository.findByEmail("address@address.com");
+		final String uri = "/address/" + customer.getId();
 		final Address address = new Address();
 		address.setZipCode("12345-000");
 		address.setStreet(null);
@@ -173,8 +173,8 @@ public class AddressTest extends AbstractTest {
 
 	@Test
 	public void givenNullDistrict_whenSave_thenBadRequest() throws Exception {
-		final String uri = "/address";
 		final Customer customer = customerRepository.findByEmail("address@address.com");
+		final String uri = "/address/" + customer.getId();
 		final Address address = new Address();
 		address.setZipCode("12345-000");
 		address.setStreet("Rua");
@@ -198,8 +198,8 @@ public class AddressTest extends AbstractTest {
 
 	@Test
 	public void givenNullComplement_whenSave_thenBadRequest() throws Exception {
-		final String uri = "/address";
 		final Customer customer = customerRepository.findByEmail("address@address.com");
+		final String uri = "/address/" + customer.getId();
 		final Address address = new Address();
 		address.setZipCode("12345-000");
 		address.setStreet("Rua");
@@ -223,8 +223,8 @@ public class AddressTest extends AbstractTest {
 
 	@Test
 	public void givenNullCity_whenSave_thenBadRequest() throws Exception {
-		final String uri = "/address";
 		final Customer customer = customerRepository.findByEmail("address@address.com");
+		final String uri = "/address/" + customer.getId();
 		final Address address = new Address();
 		address.setZipCode("12345-000");
 		address.setStreet("Rua");
@@ -248,8 +248,8 @@ public class AddressTest extends AbstractTest {
 
 	@Test
 	public void givenNullState_whenSave_thenBadRequest() throws Exception {
-		final String uri = "/address";
 		final Customer customer = customerRepository.findByEmail("address@address.com");
+		final String uri = "/address/" + customer.getId();
 		final Address address = new Address();
 		address.setZipCode("12345-000");
 		address.setStreet("Rua");
@@ -274,8 +274,8 @@ public class AddressTest extends AbstractTest {
 	@SuppressWarnings("unused")
 	@Test
 	public void givenNullCustomerId_whenSave_thenBadRequest() throws Exception {
-		final String uri = "/address";
 		final Customer customer = customerRepository.findByEmail("address@address.com");
+		final String uri = "/address/" + customer.getId();
 		final Address address = new Address();
 		address.setZipCode("12345-000");
 		address.setStreet("Rua");
