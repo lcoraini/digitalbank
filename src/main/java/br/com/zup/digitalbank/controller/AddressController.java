@@ -28,7 +28,7 @@ public class AddressController {
 	}
 
 	@GetMapping(path = "/customer/{customerId}")
-	public ResponseEntity<List<Address>> findByCustomer(@PathVariable("customerId") final Integer customerId) {
+	public ResponseEntity<Address> findByCustomer(@PathVariable("customerId") final Integer customerId) {
 		return ResponseEntity.ok().body(service.findByCustomerId(customerId));
 	}
 

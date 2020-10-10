@@ -28,7 +28,7 @@ public class AddressService {
 		return repository.findAll();
 	}
 
-	public List<Address> findByCustomerId(final Integer customerId) {
+	public Address findByCustomerId(final Integer customerId) {
 		return repository.findByCustomerId(customerId);
 	}
 

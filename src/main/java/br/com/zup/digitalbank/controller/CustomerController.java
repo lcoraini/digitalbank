@@ -28,7 +28,7 @@ public class CustomerController {
 	}
 
 	@GetMapping(path = { "/{id}" })
-	public ResponseEntity<Customer> findById(@PathVariable("customerId") final Integer id) {
+	public ResponseEntity<Customer> findById(@PathVariable("id") final Integer id) {
 		return service.findById(id).map(record -> ResponseEntity.ok().body(record))
 				.orElse(ResponseEntity.notFound().build());
 	}

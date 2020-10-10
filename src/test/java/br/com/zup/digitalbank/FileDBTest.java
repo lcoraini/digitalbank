@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -63,13 +62,13 @@ public class FileDBTest extends AbstractTest {
 	@After
 	public void deleteCustomerAndAddress() {
 		final Customer customer = customerRepository.findByEmail("address@address.com");
-		final List<Address> address = addressRepository.findByCustomerId(customer.getId());
+		final Address address = addressRepository.findByCustomerId(customer.getId());
 		final FileDB file = fileRepository.findByCustomerId(customer.getId());
 		if (file != null) {
 			fileRepository.delete(file);
 		}
-		if (!address.isEmpty()) {
-			addressRepository.delete(address.get(0));
+		if (address != null) {
+			addressRepository.delete(address);
 		}
 		customerRepository.delete(customer);
 	}
@@ -110,7 +109,7 @@ public class FileDBTest extends AbstractTest {
 	@Test
 	public void givenNonExistentCustomerAddress_whenSave_thenBadRequest() throws Exception {
 		final Customer customer = customerRepository.findByEmail("address@address.com");
-		final Address address = addressRepository.findByCustomerId(customer.getId()).get(0);
+		final Address address = addressRepository.findByCustomerId(customer.getId());
 		addressRepository.delete(address);
 		final String uri = "http://localhost:8080/files/upload/" + customer.getId();
 

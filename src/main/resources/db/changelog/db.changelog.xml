@@ -92,4 +92,26 @@
 			</column>
 		</createTable>
 	</changeSet>
+	
+	<changeSet id="5" author="lcoraini">
+		<comment>Cria tabela para entidade Proposal</comment>
+		<createSequence sequenceName="proposal_id_seq" minValue="0" startValue="1" incrementBy="1"/>
+		<createTable tableName="proposal">
+			<column name="id" type="INT" autoIncrement="true">
+				<constraints primaryKey="true" primaryKeyName="pk_proposal" />
+			</column>
+			<column name="customer_id" type="INT">
+				<constraints foreignKeyName="fk_proposal_customer_id" referencedTableName="customer" referencedColumnNames="id"/>
+			</column>
+			<column name="address_id" type="INT">
+				<constraints foreignKeyName="fk_proposal_address_id" referencedTableName="address" referencedColumnNames="id"/>
+			</column>
+			<column name="file_id" type="INT">
+				<constraints foreignKeyName="fk_proposal_file_id" referencedTableName="files" referencedColumnNames="id"/>
+			</column>
+			<column name="accepted" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
 </databaseChangeLog>
