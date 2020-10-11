@@ -114,4 +114,29 @@
 			</column>
 		</createTable>
 	</changeSet>
+	
+	<changeSet id="6" author="lcoraini">
+		<comment>Cria tabela para entidade Account</comment>
+		<createSequence sequenceName="account_id_seq" minValue="0" startValue="1" incrementBy="1"/>
+		<createTable tableName="account">
+			<column name="id" type="INT" autoIncrement="true">
+				<constraints primaryKey="true" primaryKeyName="pk_account" />
+			</column>
+			<column name="agency" type="INTEGER">
+				<constraints nullable="false" />
+			</column>
+			<column name="account_nymber" type="INTEGER">
+				<constraints nullable="false" />
+			</column>
+			<column name="bank_number" type="INTEGER">
+				<constraints nullable="false" />
+			</column>
+			<column name="proposal_id" type="INT">
+				<constraints foreignKeyName="fk_account_proposal_id" referencedTableName="proposal" referencedColumnNames="id"/>
+			</column>
+			<column name="account_balance" type="DOUBLE">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
 </databaseChangeLog>
